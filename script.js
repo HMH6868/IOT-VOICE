@@ -23,7 +23,7 @@ async function checkLatestStatus() {
         const timestamp = new Date(latestEntry.createAt * 1000);
         
         updateLightDisplay(status, latestEntry.id, timestamp);
-        updateLog(`✅ Trạng thái hiện tại: ${status} (ID: ${latestEntry.id})`);
+        updateLog(`✅ Trạng thái hiện tại: ${status} (ID: ${latestEntry.id}, Mode: ${latestEntry.mode})`);
         
     } catch (error) {
         updateLog(`❌ Lỗi kiểm tra trạng thái: ${error.message}`);
@@ -109,16 +109,16 @@ function initSpeechRecognition() {
     return true;
 }
 
-// Gửi lệnh lên API
+// Gửi lệnh lên API với cấu trúc mới
 async function sendCommand(status) {
     try {
         const data = {
-            name: "voice",
             status: status,
-            createAt: Math.floor(Date.now() / 1000)
+            createAt: Math.floor(Date.now() / 1000),
+            mode: "VOICE"
         };
 
-        updateLog(`📡 Đang gửi lệnh: ${status}`);
+        updateLog(`📡 Đang gửi lệnh: ${status} (Mode: VOICE)`);
         
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -130,7 +130,7 @@ async function sendCommand(status) {
 
         if (response.ok) {
             const result = await response.json();
-            updateLog(`✅ Gửi thành công! ID: ${result.id}, Status: ${result.status}`);
+            updateLog(`✅ Gửi thành công! ID: ${result.id}, Status: ${result.status}, Mode: ${result.mode}`);
             updateStatus(`Lệnh "${status}" đã được gửi thành công!`);
             
             // Cập nhật hiển thị đèn ngay lập tức
@@ -199,6 +199,6 @@ window.onload = function() {
     initSpeechRecognition();
     checkLatestStatus(); // Kiểm tra trạng thái ngay khi load trang
     
-    // Tự động kiểm tra trạng thái mỗi 3 giây
+    // Tự động kiểm tra trạng thái mỗi 5 giây
     setInterval(checkLatestStatus, 5000);
 };
