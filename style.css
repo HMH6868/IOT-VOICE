@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+/* Light Bulb Display */
+.light-container {
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.light-bulb {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    transition: all 0.5s ease;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.light-bulb.on {
+    background: radial-gradient(circle, #ffeb3b, #ffc107);
+    box-shadow: 0 0 30px #ffeb3b, 0 0 60px #ffc107;
+    border-color: #ff9800;
+    color: #333;
+}
+
+.light-bulb.off {
+    background: #424242;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border-color: #666;
+    color: #888;
+}
+
+.light-status {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.light-status.on {
+    color: #ffeb3b;
+    text-shadow: 0 0 10px #ffeb3b;
+}
+
+.light-status.off {
+    color: #888;
+}
+
+/* Microphone Button */
+.mic-button {
+    width: 120px;
+    height: 120px;
+    border: none;
+    border-radius: 50%;
+    font-size: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px 0;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.mic-button:hover {
+    transform: scale(1.05);
+}
+
+.mic-button.listening {
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.status {
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.refresh-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.refresh-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.log {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    max-width: 500px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.log-item {
+    margin: 5px 0;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.last-updated {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 10px 0;
+}

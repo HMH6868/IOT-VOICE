@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Command & Light Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎤💡 Voice Command & Light Controller</h1>
+        
+        <!-- Light Status Display -->
+        <div class="light-container">
+            <div class="light-bulb off" id="lightBulb">💡</div>
+            <div class="light-status off" id="lightStatus">ĐANG TẢI...</div>
+            <div class="last-updated" id="lastUpdated">Đang kiểm tra trạng thái...</div>
+        </div>
+        
+        <!-- <button class="refresh-button" onclick="checkLatestStatus()">🔄 Kiểm tra trạng thái</button> -->
+        
+        <p>Bấm vào microphone và nói "ON"/"BẬT" hoặc "OFF"/"TẮT"</p>
+        
+        <button class="mic-button" id="micButton" onclick="toggleListening()">🎤</button>
+        
+        <div class="status" id="status">Nhấn để bắt đầu nghe</div>
+        
+        <div class="log" id="log">
+            <div class="log-item">Sẵn sàng để nghe lệnh...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
