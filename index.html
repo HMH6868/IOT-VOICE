@@ -1,35 +1,64 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voice Command & Light Controller</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>🎤Voice Command & Light Controller</h1>
-        
-        <!-- Light Status Display -->
-        <div class="light-container">
-            <div class="light-bulb off" id="lightBulb">💡</div>
-            <div class="light-status off" id="lightStatus">ĐANG TẢI...</div>
-            <div class="last-updated" id="lastUpdated">Đang kiểm tra trạng thái...</div>
-        </div>
-        
-        <!-- <button class="refresh-button" onclick="checkLatestStatus()">🔄 Kiểm tra trạng thái</button> -->
-        
-        <p>Bấm vào microphone và nói "ON"/"BẬT" hoặc "OFF"/"TẮT"</p>
-        
-        <button class="mic-button" id="micButton" onclick="toggleListening()">🎤</button>
-        
-        <div class="status" id="status">✨ Nhấn để bắt đầu nghe</div>
-        
-        <div class="log" id="log">
-            <div class="log-item">🚀 Sẵn sàng để nghe lệnh...</div>
-        </div>
+      <h1>🎤Voice Command & Light Controller</h1>
+
+      <!-- Light Status Display -->
+      <div class="light-container">
+        <div class="light-bulb off" id="lightBulb">💡</div>
+        <div class="light-status off" id="lightStatus">ĐANG TẢI...</div>
+        <div class="last-updated" id="lastUpdated">Đang kiểm tra trạng thái...</div>
+      </div>
+
+      <!-- <button class="refresh-button" onclick="checkLatestStatus()">🔄 Kiểm tra trạng thái</button> -->
+
+      <p>Bấm vào microphone và nói "ON"/"BẬT" hoặc "OFF"/"TẮT"</p>
+
+      <button
+        class="mic-button"
+        id="micButton"
+        onclick="toggleListening()"
+        aria-label="Toggle microphone"
+      >
+        <!-- Inline SVG microphone (simple, matches accent circle) -->
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle
+            cx="32"
+            cy="32"
+            r="30"
+            fill="var(--accent)"
+            stroke="rgba(0,0,0,0.2)"
+            stroke-width="2"
+          />
+          <g transform="translate(18,18) scale(0.8)" fill="#fff">
+            <path d="M14 0a4 4 0 00-4 4v10a4 4 0 008 0V4a4 4 0 00-4-4z" />
+            <path d="M22 10a1 1 0 00-1-1h-2a1 1 0 000 2h2a1 1 0 001-1z" opacity="0.9" />
+            <path d="M10 16a8 8 0 0016 0h-2a6 6 0 01-12 0H10z" opacity="0.9" />
+          </g>
+        </svg>
+      </button>
+
+      <div class="status" id="status">✨ Nhấn để bắt đầu nghe</div>
+
+      <div class="log" id="log">
+        <div class="log-item">🚀 Sẵn sàng để nghe lệnh...</div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
