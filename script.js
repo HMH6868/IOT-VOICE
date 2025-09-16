@@ -176,17 +176,109 @@ function stopListening() {
 
 // Cập nhật UI
 function updateStatus(message) {
-    document.getElementById('status').textContent = message;
+    const statusElement = document.getElementById('status');
+    if (statusElement) {
+        statusElement.textContent = message;
+        
+        // Add pulse animation for status updates
+        statusElement.style.transform = 'scale(1.02)';
+        setTimeout(() => {
+            statusElement.style.transform = 'scale(1)';
+        }, 150);
+    }
 }
 
 function updateLog(message) {
+    // Determine icon based on message content
+    let icon = '📝'; // Default icon
+    
+    if (message.includes('đang kiểm tra') || message.includes('đang gửi')) {
+        icon = '🔄';
+    } else if (message.includes('thành công') || message.includes('✅')) {
+        icon = '✅';
+    } else if (message.includes('lỗi') || message.includes('❌')) {
+        icon = '❌';
+    } else if (message.includes('nghe') || message.includes('🎤')) {
+        icon = '🎤';
+    } else if (message.includes('đã nghe') || message.includes('👂')) {
+        icon = '👂';
+    } else if (message.includes('gửi lệnh') || message.includes('📡')) {
+        icon = '📡';
+    } else if (message.includes('sẵn sàng') || message.includes('🚀')) {
+        icon = '🚀';
+    }
+    
+    updateLogWithIcon(message, icon);
+}
+
+// Theme Management
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme === 'auto' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+    
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+    
+    // Smooth transition effect
+    document.body.style.transition = 'background 0.3s ease, color 0.3s ease';
+    setTimeout(() => {
+        document.body.style.transition = '';
+    }, 300);
+}
+
+function updateThemeIcon(theme) {
+    const themeIcon = document.querySelector('.theme-icon');
+    if (themeIcon) {
+        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+}
+
+// Clear log functionality
+function clearLog() {
+    const log = document.getElementById('log');
+    log.innerHTML = '<div class="log-item welcome"><div class="log-icon">🚀</div><div class="log-content">Nhật ký đã được xóa. Sẵn sàng để nghe lệnh...</div></div>';
+    updateLog('🧹 Đã xóa nhật ký hoạt động');
+}
+
+// Enhanced updateLog with better formatting
+function updateLogWithIcon(message, icon = '📝') {
     const log = document.getElementById('log');
     const logItem = document.createElement('div');
     logItem.className = 'log-item';
-    const timestamp = new Date().toLocaleTimeString('vi-VN');
-    logItem.textContent = `[${timestamp}] ${message}`;
+    
+    const timestamp = new Date().toLocaleTimeString('vi-VN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+    
+    logItem.innerHTML = `
+        <div class="log-icon">${icon}</div>
+        <div class="log-content">[${timestamp}] ${message}</div>
+    `;
+    
     log.appendChild(logItem);
     log.scrollTop = log.scrollHeight;
+    
+    // Add entrance animation
+    logItem.style.opacity = '0';
+    logItem.style.transform = 'translateX(-20px)';
+    
+    requestAnimationFrame(() => {
+        logItem.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        logItem.style.opacity = '1';
+        logItem.style.transform = 'translateX(0)';
+    });
     
     // Giới hạn số lượng log items
     if (log.children.length > 20) {
@@ -196,9 +288,19 @@ function updateLog(message) {
 
 // Khởi tạo khi tải trang
 window.onload = function() {
+    initTheme();
     initSpeechRecognition();
     checkLatestStatus(); // Kiểm tra trạng thái ngay khi load trang
     
     // Tự động kiểm tra trạng thái mỗi 5 giây
     setInterval(checkLatestStatus, 5000);
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
+        if (localStorage.getItem('theme') === 'auto') {
+            const theme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+    });
 };
